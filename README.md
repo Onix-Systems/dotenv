@@ -115,6 +115,21 @@ using this option.
 require('dotenv').config({encoding: 'base64'});
 ```
 
+#### Export compatible
+
+Default: `false`
+
+Normally, dotenv looks for a list of key value pairs, eg `KEY=VAL`, and will
+ignore lines that don't match this pattern.
+
+This option will make dotenv support a `export KEY=VAL` syntax (by ignoring the
+`export` keyword and associated whitespace) for compatibility with a shell style
+.env file.
+
+```js
+require('dotenv').config({exportCompatible: true});
+```
+
 ## Parse
 
 The engine which parses the contents of your file containing environment

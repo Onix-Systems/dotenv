@@ -49,6 +49,14 @@ describe('dotenv', function () {
       done()
     })
 
+    it('takes option for encoding', function (done) {
+      var exportCompatible = true
+      dotenv.config({exportCompatible: true})
+
+      parseStub.args[0][1].should.have.property('exportCompatible', exportCompatible)
+      done()
+    })
+
     it('reads path with encoding, parsing output to process.env', function (done) {
       dotenv.config()
 
@@ -121,6 +129,17 @@ describe('dotenv', function () {
 
     it('reads after a skipped line', function (done) {
       parsed.AFTER_LINE.should.eql('after_line')
+      done()
+    })
+
+    it('ignore lines starting with export', function (done) {
+      parsed.should.not.have.property('EXPORT')
+      done()
+    })
+    it('parse lines starting with export if exportCompatible is set', function (done) {
+      var exportParsed = dotenv.parse(fs.readFileSync('test/.env', {encoding: 'utf8'}), { exportCompatible: true })
+
+      exportParsed.EXPORT.should.eql('export')
       done()
     })
 
